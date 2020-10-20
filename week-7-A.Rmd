@@ -60,11 +60,37 @@ q_resamples1 <- q_resamples %>%
 
 q_resamples1 %>% 
   ggplot(aes(x = mean_hours, y = after_stat(count/sum(count)))) +
-    geom_histogram(binwidth = .05) +
+    geom_histogram(binwidth = .05, color = "white", fill = "lightgray") +
+    geom_vline(xintercept = avg,
+             linetype = "dashed",
+             color = "red") +
+  geom_vline(xintercept = (avg - interval), linetype = "dashed") +
+  geom_vline(xintercept = (avg + interval), linetype = "dashed") +
   labs(x = "Mean Hours",
-       y = "Proportion",
-       title = "Average Number of Hours of Work Reported by Students for College Courses")
+       y = "Probability",
+       title = "Average Number of Hours of Work Reported by Students for College Courses") +
+  theme_classic() 
+
+avg <- mean(q_resamples1$mean_hours)
+hours <- q_resamples1$mean_hours
+interval <- 2*sd(hours)
+?sd
 ```
 
+```{r}
+
+q_resamples1 %>% 
+  ggplot(aes(x = mean_hours, y = after_stat(count/sum(count)))) +
+    geom_density(binwidth = .05, color = "black", fill = "white") +
+    geom_vline(xintercept = avg,
+             linetype = "dashed",
+             color = "red") +
+  geom_vline(xintercept = (avg - interval), linetype = "dashed") +
+  geom_vline(xintercept = (avg + interval), linetype = "dashed") +
+  labs(x = "Mean Hours",
+       y = "Density",
+       title = "Hours of Work Reported by Students for College Courses") +
+  theme_classic() 
+```
 
 
